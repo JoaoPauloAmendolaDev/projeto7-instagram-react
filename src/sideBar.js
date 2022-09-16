@@ -8,7 +8,7 @@ export default function SideBar(){
           <img src="assets/catanacomics.svg" />
           <div class="texto">
             <strong>catanacomics</strong>
-            <span>
+            <span onClick={() => perguntarNome()}>
               Catana
               <ion-icon name="pencil"></ion-icon>
             </span>
@@ -32,4 +32,8 @@ export default function SideBar(){
         </div>
     
 )
+}
+
+function perguntarNome(){
+  let novoNome = prompt('Digite o seu nome de Usuário: ')
 }
