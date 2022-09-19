@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 let arrayPosts= [
     {
@@ -14,57 +14,86 @@ let arrayPosts= [
 ]
 
 
+
+
 export default function Post(){
-    function Posts(props){
-        const [curtido, verificaCurtido] = React.useState(0)
-        return(
-            <div class="posts">
-                <div class="post">
-                    <div class="topo">
-                        <div class="usuario">
-                            <img src= {props.fotoUsuario} />
-                                {props.nomeUsuario}
-                        </div>
-                        <div class="acoes">
-                            <ion-icon name="ellipsis-horizontal"></ion-icon>
-                        </div>
-                    </div>
 
-                    <div class="conteudo" onClick={() => curtir()} >
-                        <img src={props.imagemConteudo}/>
-                    </div>
+    return(arrayPosts.map((p) => <Posts 
+                                        fotoUsuario={p.fotoUsuario}
+                                        nomeUsuario={p.nomeUsuario}
+                                        imagemConteudo={p.imagemConteudo}
+                                        imagemCurtidor={p.imagemCurtidor}
+                                        curtidor={p.curtidor}
+                                        numeroCurtidores={p.numeroCurtidores}
+                                                                            />))
+}
 
-                    <div class="fundo">
+
+function Posts(props){
+    let [curtido, setCurtido] = useState(0)
+    let [numeroDeCurtidas, setNumeroDeCurtidas] = useState(props.numeroCurtidores)
+    let [selecionado, setSelecionado] = useState(0)
+
+    function curtir(){
+        let novoNumeroDeCurtidas = numeroDeCurtidas + 1
+        console.log(novoNumeroDeCurtidas)
+        setNumeroDeCurtidas(novoNumeroDeCurtidas)
+        setCurtido(1)
+    }
+
+    function descurtir(){
+        let novoNumeroDeCurtidas = numeroDeCurtidas - 1
+        console.log(novoNumeroDeCurtidas)
+        setNumeroDeCurtidas(novoNumeroDeCurtidas)
+        setCurtido(0)
+    }    
+
+    function selecionar(){
+        console.log('selecionei')
+        setSelecionado(1)
+    }
+
+    function deselecionar(){
+        console.log('desselecionei')
+        setSelecionado(0)
+    }
+
+    return(
+        <div class="posts">
+            <div class="post">
+                <div class="topo">
+                    <div class="usuario">
+                        <img src= {props.fotoUsuario} />
+                            {props.nomeUsuario}
+                    </div>
                     <div class="acoes">
-                <div>
-                    {(curtido == 1 || curtido == null) ? <ion-icon name="heart-sharp"></ion-icon> : <ion-icon name="heart-outline" onClick={() => curtir()}></ion-icon> }
-                    <ion-icon name="chatbubble-outline"></ion-icon>
-                    <ion-icon name="paper-plane-outline"></ion-icon>
+                        <ion-icon name="ellipsis-horizontal"></ion-icon>
+                    </div>
                 </div>
-                <div>
-                    <ion-icon name="bookmark-outline"></ion-icon>
+
+                <div class="conteudo" onClick={ curtido == 1 ? () => descurtir() : () => curtir()} >
+                    <img src={props.imagemConteudo}/>
                 </div>
+
+                <div class="fundo">
+                <div class="acoes">
+            <div>
+                {(curtido == 1 || curtido == null) ? <ion-icon name="heart-sharp" class='corVermelho' onClick={() => descurtir()}></ion-icon> : <ion-icon name="heart-outline" onClick={() => curtir()}></ion-icon> }
+                <ion-icon name="chatbubble-outline"></ion-icon>
+                <ion-icon name="paper-plane-outline"></ion-icon>
             </div>
-                        <div class="curtidas">
-                            <img src={props.imagemCurtidor} />
-                                <div class="texto">
-                                    Curtido por <strong>{props.curtidor}</strong> e <strong>outras {props.numeroCurtidores} pessoas</strong>
-                                </div>
+            <div>
+                {(selecionado == 1 || selecionado == null) ? <ion-icon name="bookmark-sharp" onClick={() => deselecionar()}></ion-icon> : <ion-icon name="bookmark-outline" onClick={() => selecionar()} ></ion-icon>}
+            </div>
+        </div>
+                    <div class="curtidas">
+                        <img src={props.imagemCurtidor} />
+                            <div class="texto">
+                                Curtido por <strong>{props.curtidor}</strong> e <strong>outras {numeroDeCurtidas} pessoas</strong>
                             </div>
                         </div>
                     </div>
                 </div>
-    )
-    
-                function curtir(){
-        console.log('123')
-        
-        verificaCurtido(1)
-        
-} 
-
-        
-    }
-    return(arrayPosts.map((p) => <Posts fotoUsuario={p.fotoUsuario} nomeUsuario={p.nomeUsuario} imagemConteudo={p.imagemConteudo}
-                                                    imagemCurtidor={p.imagemCurtidor} curtidor={p.curtidor} numeroCurtidores={p.numeroCurtidores} />))
+            </div>
+    ) 
 }
