@@ -1,15 +1,18 @@
+import React from "react";
 import Suggestions from "./suggestions";
 
 
+
 export default function SideBar(){
+  const [nome, perguntarNome] = React.useState("")
     return (
     <div class="sidebar">
         <div class="usuario">
           <img src="assets/catanacomics.svg" />
           <div class="texto">
             <strong>catanacomics</strong>
-            <span onClick={() => perguntarNome()}>
-              Catana
+            <span onClick={() => perguntar()}>
+              {(nome === '' || nome === null) ? "Catana" : nome }
               <ion-icon name="pencil"></ion-icon>
             </span>
           </div>
@@ -32,8 +35,9 @@ export default function SideBar(){
         </div>
     
 )
+function perguntar(){
+  let nomePrompt = prompt('Digite o seu nome de Usuário: ')
+  perguntarNome(nomePrompt)
+}
 }
 
-function perguntarNome(){
-  let novoNome = prompt('Digite o seu nome de Usuário: ')
-}

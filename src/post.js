@@ -1,3 +1,4 @@
+import React from "react";
 
 let arrayPosts= [
     {
@@ -15,44 +16,54 @@ let arrayPosts= [
 
 export default function Post(){
     function Posts(props){
-    return(
-        <div class="posts">
-            <div class="post">
-                <div class="topo">
-                    <div class="usuario">
-                        <img src= {props.fotoUsuario} />
-                            {props.nomeUsuario}
+        const [curtido, verificaCurtido] = React.useState(0)
+        return(
+            <div class="posts">
+                <div class="post">
+                    <div class="topo">
+                        <div class="usuario">
+                            <img src= {props.fotoUsuario} />
+                                {props.nomeUsuario}
+                        </div>
+                        <div class="acoes">
+                            <ion-icon name="ellipsis-horizontal"></ion-icon>
+                        </div>
                     </div>
+
+                    <div class="conteudo" onClick={() => curtir()} >
+                        <img src={props.imagemConteudo}/>
+                    </div>
+
+                    <div class="fundo">
                     <div class="acoes">
-                        <ion-icon name="ellipsis-horizontal"></ion-icon>
-                    </div>
+                <div>
+                    {(curtido == 1 || curtido == null) ? <ion-icon name="heart-sharp"></ion-icon> : <ion-icon name="heart-outline" onClick={() => curtir()}></ion-icon> }
+                    <ion-icon name="chatbubble-outline"></ion-icon>
+                    <ion-icon name="paper-plane-outline"></ion-icon>
                 </div>
-
-                <div class="conteudo">
-                    <img src={props.imagemConteudo}/>
+                <div>
+                    <ion-icon name="bookmark-outline"></ion-icon>
                 </div>
-
-                <div class="fundo">
-                <div class="acoes">
-            <div>
-                <ion-icon name="heart-outline"></ion-icon>
-                <ion-icon name="chatbubble-outline"></ion-icon>
-                <ion-icon name="paper-plane-outline"></ion-icon>
             </div>
-            <div>
-                <ion-icon name="bookmark-outline"></ion-icon>
-            </div>
-        </div>
-                    <div class="curtidas">
-                        <img src={props.imagemCurtidor} />
-                            <div class="texto">
-                                Curtido por <strong>{props.curtidor}</strong> e <strong>outras {props.numeroCurtidores} pessoas</strong>
+                        <div class="curtidas">
+                            <img src={props.imagemCurtidor} />
+                                <div class="texto">
+                                    Curtido por <strong>{props.curtidor}</strong> e <strong>outras {props.numeroCurtidores} pessoas</strong>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
     )
+    
+                function curtir(){
+        console.log('123')
+        
+        verificaCurtido(1)
+        
+} 
+
+        
     }
     return(arrayPosts.map((p) => <Posts fotoUsuario={p.fotoUsuario} nomeUsuario={p.nomeUsuario} imagemConteudo={p.imagemConteudo}
                                                     imagemCurtidor={p.imagemCurtidor} curtidor={p.curtidor} numeroCurtidores={p.numeroCurtidores} />))
